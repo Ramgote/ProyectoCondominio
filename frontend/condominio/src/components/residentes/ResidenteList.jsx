@@ -5,7 +5,7 @@ import {
     deleteResidente, 
     createResidente, 
     updateResidente 
-} from "../api/residentes"
+} from "../../api/residentes"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { PencilSquareIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline'
