@@ -1,0 +1,15 @@
+instalar vite en la raiz del frontend en este caso creara una carpeta
+residentes (nombreDelCrud):
+npm create vite residentes
+
+En el proceso de la creación te pedira seleccionar una opcion en este caso :
+React
+
+nuevamente te pedira seleccionar una opcion en este caso :
+javaScript + SWC
+
+entrar en la carpeta creada en este caso residentes y ejecutar :
+npm install
+
+Luego instalar axios para ... :
+npm install axios

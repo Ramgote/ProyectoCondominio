@@ -1,0 +1,81 @@
+python -m venv venv
+venv\Scripts\activate
+pip install django
+django-admin startproject condominio
+cd condominio
+python manage.py runserver
+
+
+pip install psycopg2
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nombre_base',
+        'USER': 'usuario',
+        'PASSWORD': 'contraseña',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+python manage.py migrate
+
+Crear modelo : 
+
+
+class Residente(models.Model):
+    ci = models.CharField(max_length=8, primary_key=True)
+    nombre = models.CharField(max_length=40)
+    apPaterno = models.CharField(max_length=35)
+    apMaterno = models.CharField(max_length=35)
+    fechaCreacion = models.DateTimeField(auto_now=True)
+    #fechaModificacion = models.DateTimeField(auto_now=True)
+
+añadir en el archivo app.py la app el modulo creado : 
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'modulos.residentes'  <== ejemplo
+]
+
+En el archivo admin.py registrar la nueva app del modulo:
+admin.site.register(Residente)
+
+Instalar django rest framewor :
+pip install djangorestframework
+
+Agrega  a :
+
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'modulos',  # tu app personalizada
+]
+
+Opcionalmente, puedes configurar DRF:
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}
+
+instalar cors en la raiz base :
+pip install django-cors-headers
+
+En en apartado MIDDELWARE del archivo settings.py agregar :
+'corsheaders.middleware.CorsMiddleware',
+
+al final del archivo adicionar :
+
+
+
