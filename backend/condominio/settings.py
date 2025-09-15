@@ -39,14 +39,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'rest_framework_simplejwt',
-    'modulos.residentes'
+    'rest_framework_simplejwt',  
+    'modulos.usuarios',
+    'modulos.bitacora',
+    'modulos.residentes',
+    'modulos.propiedades'
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # <-- Asegura que solo usuarios autenticados accedan
+        # O 'rest_framework.permissions.IsAuthenticatedOrReadOnly' si quieres permitir GET sin auth
+    ]
 }
 
 MIDDLEWARE = [
@@ -56,8 +64,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'modulos.usuarios.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'   
 ]
 
 ROOT_URLCONF = 'condominio.urls'
@@ -135,6 +144,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH_USER_MODEL = 'usuarios.CustomUser'
 
 CORS_ALLOW_ALL_ORIGINS = True
 

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { 
-    getResidentes, 
-    deleteResidente, 
-    createResidente, 
-    updateResidente 
+import {
+    getResidentes,
+    deleteResidente,
+    createResidente,
+    updateResidente
 } from "../../api/residentes"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { PencilSquareIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { FaCar, FaDog } from "react-icons/fa"
 
 export default function ResidenteList() {
     // Aseguramos que residentes siempre sea un array
@@ -22,7 +23,7 @@ export default function ResidenteList() {
         apPaterno: '',
         apMaterno: ''
     })
-    
+
     const navigate = useNavigate()
 
     const loadResidentes = async () => {
@@ -30,11 +31,11 @@ export default function ResidenteList() {
             setLoading(true);
             const response = await getResidentes();
             console.log('Datos recibidos de la API:', response);
-            
+
             // Extraemos el array de resultados de la respuesta paginada
             const residentesData = response && response.results ? response.results : [];
             console.log('Datos de residentes a mostrar:', residentesData);
-            
+
             setResidentes(residentesData);
         } catch (error) {
             console.error('Error cargando residentes:', error);
@@ -138,11 +139,13 @@ export default function ResidenteList() {
                 <h1 className="text-3xl font-bold text-sky-800">Residentes</h1>
                 <button
                     onClick={openNewResidenteModal}
-                    className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md flex items-center gap-2"
+                    className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-2 rounded-md flex items-center gap-2"
                 >
                     <PlusIcon className="h-5 w-5" />
-                    Nuevo Residente
+                    {/* Solo mostrar el texto en pantallas medianas en adelante */}
+                    <span className="hidden sm:inline">Nuevo Residente</span>
                 </button>
+
             </div>
 
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -160,7 +163,7 @@ export default function ResidenteList() {
                             {residentes.length === 0 ? (
                                 <tr>
                                     <td colSpan="3" className="px-6 py-4 text-center text-gray-500">
-                                        No hay residentes registrados
+                                        No hay residentes registrados.
                                     </td>
                                 </tr>
                             ) : (
@@ -192,10 +195,16 @@ export default function ResidenteList() {
                                                 </button>
                                                 <button
                                                     onClick={() => handleViewVehiculos(residente.id)}
-                                                    className="text-green-600 hover:text-green-900"
+                                                    className="text-green-500 hover:text-green-700"
                                                     title="Ver vehículos"
                                                 >
-                                                    <span className="text-sm font-medium">Vehículos</span>
+                                                    < FaCar className="h-5 w-5"/>
+                                                </button>
+                                                <button
+                                                    className="text-blue-500 hover:text-blue-700"
+                                                    title="Ver Mascotas"
+                                                >
+                                                    < FaDog className="h-5 w-5"/>
                                                 </button>
                                             </div>
                                         </td>

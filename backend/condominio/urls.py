@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('admin/', admin.site.urls),    
     path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/propiedades/', include('modulos.propiedades.api.urls')),
+    path('api/usuarios/', include('modulos.usuarios.api.urls')),
     path('api/residentes/', include('modulos.residentes.api.urls')),
+    path('api/bitacora/', include('modulos.bitacora.api.urls')),
 ]
